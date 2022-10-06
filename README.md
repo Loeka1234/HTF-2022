@@ -1,7 +1,7 @@
 # HTF-2022
 
 ## MQTT JS client example
-'''
+```js
 // GIVEN CODE
 var mqtt = require('mqtt')
 
@@ -37,4 +37,4 @@ client.subscribe('my/test/topic');
 
 // publish message 'Hello' to topic 'my/test/topic'
 client.publish('my/test/topic', 'Hello');
-'''
+```
