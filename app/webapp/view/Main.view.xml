@@ -1,0 +1,102 @@
+<mvc:View
+		controllerName="com.flexso.htf2022.controller.Main"
+		xmlns:mvc="sap.ui.core.mvc"
+		xmlns:core="sap.ui.core" 
+		xmlns:m="sap.m"
+		xmlns="sap.f"
+		xmlns:layout="sap.ui.layout"
+		xmlns:smc="sap.ui.comp.smartmicrochart"
+		xmlns:mc="sap.suite.ui.microchart"
+		height="100%">
+		<DynamicPage id="dynamicPageId" class="wallpaper" backgroundDesign="Transparent">
+			<title>
+				<DynamicPageTitle class="titleBackground">
+					<heading>
+						<m:HBox alignContent="Center">
+							<m:Image src="./img/data_rising_icon.jpg" width="20px" height="20px" class="sapUiSmallMarginEnd"/>
+							<m:Title text="Interactive Dashboard" class="graphColor"/>
+						</m:HBox>
+					</heading>
+				</DynamicPageTitle>
+			</title>
+			<content>
+				<m:VBox width="100%">
+					<m:HBox class="sapUiMediumMarginBottom">
+						<m:GenericTile class="sapUiSmallMargin tileLayout graphBackground tileBorder" size="L" header="{i18n>totalConsumption}" subheader="{i18n>thisMonth}" press="pressTotalConsumptionMonth">
+							<m:TileContent unit="{i18n>unitMonth}" footer="">
+								<m:NumericContent value="{reg>/flow/totalConsumptionMonth}" valueColor="{reg>/flow/totalConsumptionMonthValueState}" indicator="{reg>/flow/totalConsumptionMonthIndicator}" withMargin="false" />
+							</m:TileContent>
+						</m:GenericTile>
+						<m:GenericTile class="sapUiSmallMargin tileLayout graphBackground tileBorder" size="L" header="{i18n>totalConsumption}" subheader="{i18n>thisWeek}" press="pressTotalConsumptionWeek">
+							<m:TileContent unit="{i18n>unitWeek}" footer="">
+								<m:NumericContent value="{reg>/flow/totalConsumptionWeek}" valueColor="{reg>/flow/totalConsumptionWeekValueState}" indicator="{reg>/flow/totalConsumptionWeekIndicator}" withMargin="false" />
+							</m:TileContent>
+						</m:GenericTile>
+						<m:GenericTile class="sapUiSmallMargin tileLayout graphBackground tileBorder" size="L" header="{i18n>totalConsumption}" subheader="{i18n>last24Hours}" press="pressTotalConsumptionToday">
+							<m:TileContent unit="{i18n>unitDay}" footer="">
+								<m:NumericContent value="{reg>/flow/totalConsumptionToday}" valueColor="{reg>/flow/totalConsumptionTodayValueState}" indicator="{reg>/flow/totalConsumptionTodayIndicator}" withMargin="false" />
+							</m:TileContent>
+						</m:GenericTile>
+						<m:GenericTile class="sapUiSmallMargin tileLayout graphBackground tileBorder" size="L" header="{i18n>averageConsumption}" subheader="{i18n>thisMonth}" press="pressAverageConsumptionMonth">
+							<m:TileContent unit="{i18n>unitDay}" footer="">
+								<m:NumericContent value="{reg>/flow/averageConsumptionMonth}" valueColor="{reg>/flow/averageConsumptionMonthValueState}" indicator="{reg>/flow/averageConsumptionMonthIndicator}" withMargin="false" />
+							</m:TileContent>
+						</m:GenericTile>
+						<m:GenericTile class="sapUiSmallMargin tileLayout graphBackground tileBorder" size="L" header="{i18n>averageConsumption}" subheader="{i18n>thisWeek}" press="pressAverageConsumptionWeek">
+							<m:TileContent unit="{i18n>unitDay}" footer="">
+								<m:NumericContent value="{reg>/flow/averageConsumptionWeek}" valueColor="{reg>/flow/averageConsumptionWeekValueState}" indicator="{reg>/flow/averageConsumptionWeekIndicator}" withMargin="false" />
+							</m:TileContent>
+						</m:GenericTile>
+						<m:GenericTile class="sapUiSmallMargin tileLayout graphBackground tileBorder" size="L" header="{i18n>averageConsumption}" subheader="{i18n>today}" press="pressAverageConsumptionToday">
+							<m:TileContent unit="{i18n>unitHours}" footer="">
+								<m:NumericContent value="{reg>/flow/averageConsumptionToday}" valueColor="{reg>/flow/averageConsumptionTodayValueState}" indicator="{reg>/flow/averageConsumptionTodayIndicator}" withMargin="false" />
+							</m:TileContent>
+						</m:GenericTile>
+						<m:VBox justifyContent="Center" alignContent="SpaceAround" alignItems="Center">
+						<!-- ADVANCED: make the wizard change its appearance according to the quote type (oQuote.type)
+
+							hint: use ui5 expression binding
+							
+							https://sapui5.hana.ondemand.com/sdk/#/topic/daf6852a04b44d118963968a1239d2c0.html
+						-->
+							<m:Image  src="./img/bad_wiz.svg" width="100px" height="100px"/>
+							<m:Text class="wizMesGood" text="{reg>/flow/oQuote/message}" textAlign="Center" />
+						</m:VBox>
+
+					</m:HBox>
+					<m:HBox>
+						<m:VBox class="sapUiLargeMarginEnd">
+							<m:Title text="Consumption in Days" class="sapUiSmallMarginBottom graphColor"/>
+							<m:FlexBox width="30rem" height="18rem" alignItems="Center" class="sapUiSmallMargin graphBackground">
+								<m:items>
+									<mc:InteractiveBarChart displayedBars="7" selectionChanged="interactiveBarChartSelectionChanged" press="interactiveBarChartPressed" bars="{reg>/flow/flowBars}" class="sapUiSmallMarginTop">
+										<mc:bars>
+											<mc:InteractiveBarChartBar 
+												value="{path: 'reg>consumption', formatter:'.flowFormatter'}" 
+												displayedValue="{path: 'reg>consumption', formatter:'.consumptionFormatter'}"
+												label="{path: 'reg>date', formatter:'.dateFormatter'}" 
+												color="{= ${reg>/flow/flowLevels/consumptionLevels/NORMAL} > ${reg>consumption} ? 'Good' : ( ${reg>/flow/flowLevels/consumptionLevels/HIGH} > ${reg>consumption} ? 'Critical' : 'Error' )}" 
+												selected="{reg>selected}"
+												class="graphColor"/>
+										</mc:bars>
+									</mc:InteractiveBarChart>
+								</m:items>
+							</m:FlexBox>
+						</m:VBox>
+						<m:VBox class="sapUiLargeMarginEnd">
+							<m:Title text="Water Current (L/min)" class="sapUiSmallMarginBottom graphColor"/>
+							<m:FlexBox width="50rem" height="18rem" alignItems="Center" class="sapUiSmallMargin graphBackground">
+								<m:items>
+									<mc:InteractiveLineChart selectionChanged="interactiveLineChartSelectionChanged" press="interactiveLineChartPressed" displayedPoints="25" points="{reg>/flow/flowPoints}" selectionEnabled="true" precedingPoint="1" succeedingPoint="1">
+										<mc:points>
+											<mc:InteractiveLineChartPoint value="{path: 'reg>flow', formatter:'.flowFormatter'}" label="{ path: 'reg>datetime', formatter:'.timeFormatter'}" color="{= ${reg>/flow/flowLevels/flowLevels/NORMAL} > ${reg>flow} ? 'Good' : ( ${reg>/flow/flowLevels/flowLevels/HIGH} > ${reg>flow} ? 'Critical' : 'Error' )}"/>
+										</mc:points>
+									</mc:InteractiveLineChart>
+								</m:items>
+							</m:FlexBox>
+						</m:VBox>
+					</m:HBox>
+				</m:VBox>
+			</content>
+		</DynamicPage>
+</mvc:View>

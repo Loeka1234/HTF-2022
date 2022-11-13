@@ -1,0 +1,82 @@
+{
+  "name": "SetupFioriFrontend",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "repository": "<Add your repository here>",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@sap/audit-logging": "^5.5.6",
+    "@sap/cds": "6.1.2",
+    "@sap/cds-dk": "^6.1.5",
+    "@sap/cds-odata-v2-adapter-proxy": "^1.9.6",
+    "@sap/xsenv": "^3.3.2",
+    "@sap/xssec": "^2.2.5",
+    "cors": "^2.8.5",
+    "express": "^4",
+    "hdb": "^0.19.0",
+    "mqtt": "^4.3.7",
+    "passport": "^0.6.0"
+  },
+  "devDependencies": {
+    "@sap/hdi-deploy": "^4.5.0",
+    "rimraf": "^3.0.2",
+    "sqlite3": "^5.0.4"
+  },
+  "engines": {
+    "node": "^16"
+  },
+  "scripts": {
+    "local:db": "cds deploy --to sqlite --no-save",
+    "start": "cds watch",
+    "deploy:mta": "cf deploy mta_archives/setupfiorifrontend.mtar",
+    "build:dev": "mbt build --mtar=setupfiorifrontend.mtar",
+    "deploy:dev": "npm run build:dev && npm run deploy:mta"
+  },
+  "eslintConfig": {
+    "extends": "eslint:recommended",
+    "env": {
+      "es2020": true,
+      "node": true,
+      "jest": true,
+      "mocha": true
+    },
+    "globals": {
+      "SELECT": true,
+      "INSERT": true,
+      "UPDATE": true,
+      "DELETE": true,
+      "CREATE": true,
+      "DROP": true,
+      "CDL": true,
+      "CQL": true,
+      "CXL": true,
+      "cds": true
+    },
+    "rules": {
+      "no-console": "off",
+      "require-atomic-updates": "off"
+    }
+  },
+  "cds": {
+    "requires": {
+      "db": {
+        "kind": "hana-cloud"
+      }
+    },
+    "[development]": {
+      "requires": {
+        "db": {
+          "kind": "sqlite",
+          "credentials": {
+            "database": "./sqlite.db"
+          },
+          "model": [
+            "db",
+            "srv"
+          ]
+        }
+      }
+    }
+  }
+}

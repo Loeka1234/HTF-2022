@@ -1,0 +1,98 @@
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1" />
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1" />
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+        <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1" />
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="FlowStreamService">
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="FlowStream" EntityType="FlowStreamService.FlowStream" />
+            </EntityContainer>
+            <EntityType Name="FlowStream">
+                <Key>
+                    <PropertyRef Name="ID" />
+                </Key>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7" />
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255" />
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7" />
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255" />
+                <Property Name="ID" Type="Edm.Guid" Nullable="false" />
+                <Property Name="flow" Type="Edm.String" />
+                <Property Name="datetime" Type="Edm.String" />
+                <Property Name="descr" Type="Edm.String" />
+            </EntityType>
+            <Annotations Target="FlowStreamService.FlowStream">
+                <Annotation Term="UI.DataPoint" Qualifier="flow">
+                    <Record Type="UI.DataPointType">
+                        <PropertyValue Property="Value" Path="flow" />
+                        <PropertyValue Property="Title" String="flow" />
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.DataPoint" Qualifier="datetime">
+                    <Record Type="UI.DataPointType">
+                        <PropertyValue Property="Value" Path="datetime" />
+                        <PropertyValue Property="Title" String="datetime" />
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.Chart">
+                    <Record Type="UI.ChartDefinitionType">
+                        <PropertyValue Property="Title" String="flowMicroChart" />
+                        <PropertyValue Property="Description" String="Line Micro Chart" />
+                        <PropertyValue Property="ChartType" EnumMember="UI.ChartType/Line" />
+                        <PropertyValue Property="Dimensions">
+                            <Collection>
+                                <PropertyPath>datetime</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="Measures">
+                            <Collection>
+                                <PropertyPath>flow</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="MeasureAttributes">
+                            <Collection>
+                                <Record Type="UI.ChartMeasureAttributeType">
+                                    <PropertyValue Property="Measure" PropertyPath="flow" />
+                                    <PropertyValue Property="Role" EnumMember="UI.ChartMeasureRoleType/Axis1" />
+                                    <PropertyValue Property="DataPoint" AnnotationPath="@UI.DataPoint#flow" />
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="FlowStreamService.FlowStream/createdAt">
+                <Annotation Term="UI.HiddenFilter" Bool="true" />
+                <Annotation Term="Core.Immutable" Bool="true" />
+                <Annotation Term="Core.Computed" Bool="true" />
+                <Annotation Term="Common.Label" String="Gecreëerd op" />
+            </Annotations>
+            <Annotations Target="FlowStreamService.FlowStream/createdBy">
+                <Annotation Term="UI.HiddenFilter" Bool="true" />
+                <Annotation Term="Core.Immutable" Bool="true" />
+                <Annotation Term="Core.Computed" Bool="true" />
+                <Annotation Term="Core.Description" String="Unieke ID van gebruiker" />
+                <Annotation Term="Common.Label" String="Gecreëerd door" />
+            </Annotations>
+            <Annotations Target="FlowStreamService.FlowStream/modifiedAt">
+                <Annotation Term="UI.HiddenFilter" Bool="true" />
+                <Annotation Term="Core.Computed" Bool="true" />
+                <Annotation Term="Common.Label" String="Gewijzigd op" />
+            </Annotations>
+            <Annotations Target="FlowStreamService.FlowStream/modifiedBy">
+                <Annotation Term="UI.HiddenFilter" Bool="true" />
+                <Annotation Term="Core.Computed" Bool="true" />
+                <Annotation Term="Core.Description" String="Unieke ID van gebruiker" />
+                <Annotation Term="Common.Label" String="Gewijzigd door" />
+            </Annotations>
+            <Annotations Target="FlowStreamService.FlowStream/ID">
+                <Annotation Term="Core.Computed" Bool="true" />
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

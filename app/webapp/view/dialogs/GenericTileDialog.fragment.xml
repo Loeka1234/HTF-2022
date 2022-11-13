@@ -1,0 +1,49 @@
+<core:FragmentDefinition
+   xmlns="sap.m"
+   xmlns:f="sap.ui.layout.form"
+   xmlns:core="sap.ui.core" >
+   <Dialog
+      id="addGenericTileDialog"
+      title="{i18n>genericTileDialogTitle}">
+	  	<HBox class="sapUiSmallMargin">
+			<GenericTile class="sapUiSmallMargin sapUiMediumMarginEnd tileLayout" size="L" header="{reg>/flow/dialogTileHeader}" subheader="{reg>/flow/dialogTileSubheader}" press="pressDialogTile">
+				<TileContent unit="{reg>/flow/dialogTileUnit}" footer="">
+					<NumericContent value="{reg>/flow/dialogTileValue}" valueColor="{reg>/flow/dialogTileValueColor}" indicator="{reg>/flow/dialogTileIndicator}" withMargin="false" />
+				</TileContent>
+			</GenericTile>
+			<f:SimpleForm
+					editable="true"
+					layout="ResponsiveGridLayout" 
+					labelSpanXL="3" 
+					labelSpanL="3" 
+					labelSpanM="12" 
+					labelSpanS="12" 
+					adjustLabelSpan="true" 
+					emptySpanXL="6"
+					emptySpanL="8"
+					emptySpanM="4"
+					emptySpanS="0" 
+					columnsXL="1" 
+					columnsL="1" 
+					columnsM="1" 
+					singleContainerFullSize="true" 
+					maxContainerCols="1"
+					class="sapUiLargeMarginEnd">
+				<f:content>
+					<Label text='{i18n>timeSpan}'/>
+					<Text text="{reg>/flow/dialogTileTimeSpan}" />
+					<Label text='{reg>/flow/dialogPrevSessionLabel}'/>
+					<Text text="{reg>/flow/dialogTileLastMonth}" />
+					<Label text='{i18n>difference}'/>
+					<HBox class="">
+						<core:Icon class="sapUiSmallMarginTop sapUiSmallMarginEnd" src="{= ${reg>/flow/dialogTileDifferenceState} ? 'sap-icon://add' : 'sap-icon://less' }" color="{= ${reg>/flow/dialogTileDifferenceState} ? 'red' : 'green' }"/>
+						<Text class="" text="{reg>/flow/dialogTileDifference}" />
+					</HBox>
+				</f:content>
+			</f:SimpleForm>
+		</HBox>
+      	<buttons width="auto" class="sapUiNoMarginBegin sapUiNoMarginEnd">
+            <Button id="cancelButton" type="Emphasized" text="{i18n>buttonCancel}" press=".onCloseGenericTileDialog" />
+        </buttons>
+   </Dialog>
+</core:FragmentDefinition>
