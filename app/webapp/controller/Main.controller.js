@@ -74,10 +74,10 @@ sap.ui.define(
 
       _handleLineGraph: function () {
         const aFlowStreams = this.FlowState.getProperty("flow").FlowStreams;
-        // BASIC
+        // BASIC: Done
         // Only visualize the last 25 values.
 
-        this.FlowState.updateFlow({ flowPoints: aFlowStreams });
+        this.FlowState.updateFlow({ flowPoints: aFlowStreams.slice(-25) });
       },
 
       _handleWizard: function (aFlows) {
@@ -141,7 +141,7 @@ sap.ui.define(
 
         // ADVANCED
         // Calculate the difference in consumption between last month and this month.
-        this._handleAverageMonthProgression();
+        // this._handleAverageMonthProgression();
       },
 
       _handleAverageMonthProgression: function (iAverage) {
@@ -246,7 +246,7 @@ sap.ui.define(
 
         // ADVANCED
         // Calculate the difference in consumption between last week and this week.
-        this._handleAverageTodayProgression();
+        // this._handleAverageTodayProgression();
       },
 
       _handleAverageTodayProgression: function (iAverage) {
