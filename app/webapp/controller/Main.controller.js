@@ -316,9 +316,11 @@ sap.ui.define(
           .getResourceBundle()
           .getText("unitMonth")})`;
 
-        // BASIC
+        // BASIC: Done (it will show the consumption of this month if no past month)
         // Calculate the difference between the total consumption of this month and total consumption of last month
-        const iDifference = 0;
+        const iDifference =
+          oFlowModel.totalConsumptionMonth -
+          (oFlowModel.totalConsumptionMonthPast ?? 0);
 
         const bState = iDifference > 0;
         const sDifference = `${iDifference.toFixed(2)} (${this.getView()
