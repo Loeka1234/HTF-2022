@@ -258,8 +258,6 @@ sap.ui.define(
           return iFlowDate > dXDaysAgo && iFlowDate <= dStartDate;
         });
 
-        console.log(dStartDate, iDuration);
-        console.log(aFlows);
         return this._calcConsumption(aFlows);
       },
 
