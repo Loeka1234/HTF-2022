@@ -103,17 +103,15 @@ sap.ui.define(
         // BASIC: Done
         // Calculate the total consumption of this month.
         // Hint: Use method _countConsumption
-
         const today = new Date();
         const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
         const month = new Date(today.getFullYear(), today.getMonth(), 0);
+        const totalConsumptionMonth = this._countConsumption(
+          firstDay,
+          month.getDate()
+        );
 
-        this.FlowState.updateFlow({
-          totalConsumptionMonth: this._countConsumption(
-            firstDay,
-            month.getDate()
-          ),
-        });
+        this.FlowState.updateFlow({ totalConsumptionMonth });
 
         // ADVANCED
         // Calculate the difference in consumption between last month and this month.
@@ -133,11 +131,12 @@ sap.ui.define(
 
       _handleAverageMonth: function () {
         const iTotal = this.FlowState.getProperty("flow").totalConsumptionMonth;
-        // BASIC
+        const today = new Date();
+        const month = new Date(today.getFullYear(), today.getMonth(), 0);
+
+        // BASIC: Done
         // Calculate monthly average
-        this.FlowState.updateFlow({
-          averageConsumptionMonth: 0
-        });
+        this.FlowState.updateFlow({ averageConsumptionMonth: iTotal / month.getDate() });
 
         // ADVANCED
         // Calculate the difference in consumption between last month and this month.
@@ -192,10 +191,10 @@ sap.ui.define(
 
       _handleAverageWeek: function () {
         const iTotal = this.FlowState.getProperty("flow").totalConsumptionWeek;
-        
-        // BASIC
+
+        // BASIC: Done
         // Calculate weekly average
-        this.FlowState.updateFlow({ averageConsumptionWeek: 0 });
+        this.FlowState.updateFlow({ averageConsumptionWeek: iTotal / 7 });
 
         // ADVANCED
         // Calculate the difference in consumption between last week and this week.
@@ -218,9 +217,15 @@ sap.ui.define(
         // calculate the total consumption of today.
         // Hint: Use method _countConsumption
         const today = new Date();
-        const startOfDay = new Date(today.getYear(), today.getMonth(), today.getDate());
+        const startOfDay = new Date(
+          today.getYear(),
+          today.getMonth(),
+          today.getDate()
+        );
 
-        this.FlowState.updateFlow({ totalConsumptionToday: this._countConsumption(startOfDay, 0) });
+        this.FlowState.updateFlow({
+          totalConsumptionToday: this._countConsumption(startOfDay, 0),
+        });
 
         // ADVANCED
         // Calculate the difference in consumption between yesterday and today.
@@ -240,9 +245,9 @@ sap.ui.define(
 
       _handleAverageToday: function () {
         const iTotal = this.FlowState.getProperty("flow").totalConsumptionToday;
-        // BASIC
+        // BASIC: Done
         // Calculate todays average	consumption
-        this.FlowState.updateFlow({ averageConsumptionToday: 0 });
+        this.FlowState.updateFlow({ averageConsumptionToday: iTotal / 24 });
 
         // ADVANCED
         // Calculate the difference in consumption between last week and this week.
@@ -369,11 +374,9 @@ sap.ui.define(
           .getResourceBundle()
           .getText("unitWeek")})`;
 
-        // BASIC: Done (Same as with month)
+        // BASIC
         // Calculate the difference between the total consumption of this week and total consumption of last week
-        const iDifference =
-          oFlowModel.totalConsumptionWeek -
-          (oFlowModel.totalConsumptionWeekPast ?? 0);
+        const iDifference = 0;
 
         const bState = iDifference > 0;
         const sDifference = `${iDifference.toFixed(2)} (${this.getView()
@@ -422,11 +425,9 @@ sap.ui.define(
           .getResourceBundle()
           .getText("unitDay")})`;
 
-        // BASIC: Done (Same as with month)
+        // BASIC
         // Calculate the difference between the total consumption of today and total consumption of yesterday
-        const iDifference =
-          oFlowModel.totalConsumptionToday -
-          (oFlowModel.totalConsumptionTodayPast ?? 0);
+        const iDifference = 0;
 
         const bState = iDifference > 0;
         const sDifference = `${iDifference.toFixed(2)} (${this.getView()
