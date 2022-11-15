@@ -132,18 +132,11 @@ sap.ui.define(
       },
 
       _handleAverageMonth: function () {
-        const today = new Date();
-        const daysInMonth = new Date(
-          today.getFullYear(),
-          today.getMonth(),
-          0
-        ).getDate();
-
         const iTotal = this.FlowState.getProperty("flow").totalConsumptionMonth;
-        // BASIC: Done
+        // BASIC
         // Calculate monthly average
         this.FlowState.updateFlow({
-          averageConsumptionMonth: iTotal / daysInMonth,
+          averageConsumptionMonth: 0
         });
 
         // ADVANCED
@@ -199,6 +192,7 @@ sap.ui.define(
 
       _handleAverageWeek: function () {
         const iTotal = this.FlowState.getProperty("flow").totalConsumptionWeek;
+        
         // BASIC
         // Calculate weekly average
         this.FlowState.updateFlow({ averageConsumptionWeek: 0 });
@@ -220,11 +214,13 @@ sap.ui.define(
       },
 
       _handleTotalToday: function () {
-        // BASIC
+        // BASIC: Done
         // calculate the total consumption of today.
         // Hint: Use method _countConsumption
+        const today = new Date();
+        const startOfDay = new Date(today.getYear(), today.getMonth(), today.getDate());
 
-        this.FlowState.updateFlow({ totalConsumptionToday: 0 });
+        this.FlowState.updateFlow({ totalConsumptionToday: this._countConsumption(startOfDay, 1) });
 
         // ADVANCED
         // Calculate the difference in consumption between yesterday and today.
