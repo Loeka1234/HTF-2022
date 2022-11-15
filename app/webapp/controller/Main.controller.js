@@ -117,7 +117,7 @@ sap.ui.define(
 
         // ADVANCED
         // Calculate the difference in consumption between last month and this month.
-        this._handleTotalMonthProgression();
+        // this._handleTotalMonthProgression();
       },
 
       _handleTotalMonthProgression: function (iTotal) {
@@ -176,7 +176,7 @@ sap.ui.define(
 
         // ADVANCED
         // Calculate the difference in consumption between last week and this week.
-        this._handleTotalWeekProgression();
+        // this._handleTotalWeekProgression();
       },
 
       _handleTotalWeekProgression: function (iTotal) {
@@ -199,7 +199,7 @@ sap.ui.define(
 
         // ADVANCED
         // Calculate the difference in consumption between last week and this week.
-        this._handleAverageWeekProgression();
+        // this._handleAverageWeekProgression();
       },
 
       _handleAverageWeekProgression: function (iAverage) {
@@ -220,11 +220,11 @@ sap.ui.define(
         const today = new Date();
         const startOfDay = new Date(today.getYear(), today.getMonth(), today.getDate());
 
-        this.FlowState.updateFlow({ totalConsumptionToday: this._countConsumption(startOfDay, 1) });
+        this.FlowState.updateFlow({ totalConsumptionToday: this._countConsumption(startOfDay, 0) });
 
         // ADVANCED
         // Calculate the difference in consumption between yesterday and today.
-        this._handleTotalTodayProgression();
+        // this._handleTotalTodayProgression();
       },
 
       _handleTotalTodayProgression: function (iTotal) {
