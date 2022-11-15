@@ -475,9 +475,11 @@ sap.ui.define(
           .getResourceBundle()
           .getText("unitDay")})`;
 
-        // BASIC
+        // BASIC: Done (has to be tested)
         // Calculate the difference between the average consumption of this month and average consumption of last month
-        const iDifference = 0;
+        const iDifference =
+          oFlowModel.averageConsumptionMonth -
+          (oFlowModel.averageConsumptionMonthPast ?? 0);
 
         const bState = iDifference > 0;
         const sDifference = `${iDifference.toFixed(2)} (${this.getView()
@@ -526,11 +528,11 @@ sap.ui.define(
           .getResourceBundle()
           .getText("unitDay")})`;
 
-        // BASIC
+        // BASIC: Done (has to be tested)
         // Calculate the difference between the average consumption of this week and average consumption of last week
         const iDifference =
           oFlowModel.averageConsumptionWeek -
-          oFlowModel.averageConsumptionWeekPast;
+          (oFlowModel.averageConsumptionWeekPast ?? 0);
 
         const bState = iDifference > 0;
         const sDifference = `${iDifference.toFixed(2)} (${this.getView()
@@ -579,9 +581,11 @@ sap.ui.define(
           .getResourceBundle()
           .getText("unitHours")})`;
 
-        // BASIC
+        // BASIC: Done (has to be tested)
         // Calculate the difference between the average consumption of today and average consumption of yesterday
-        const iDifference = 0;
+        const iDifference =
+          oFlowModel.averageConsumptionToday -
+          (oFlowModel.averageConsumptionTodayPast ?? 0);
 
         const bState = iDifference > 0;
         const sDifference = `${iDifference.toFixed(2)} (${this.getView()
