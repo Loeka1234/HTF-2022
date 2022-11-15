@@ -28,10 +28,10 @@ client.on("message", function (topic, message) {
   let jsonS = message.toString();
   let obj = JSON.parse(jsonS);
   obj.datetime = new Date(obj.datetime);
-  // BASIC
+  // BASIC: Done
   // Incoming logs should be added to the existing dataset (aDataset)
 
-  // ADVANCED
+  // ADVANCED: Done
   // We only want to register useful data, so negate consecutive flows with zero debit.
   // We do want to know when the flow starts and stops though.
   // Example:
@@ -48,7 +48,7 @@ client.on("message", function (topic, message) {
   console.log(aDataSet);
 });
 
-// BASIC
+// BASIC: Done
 // Subscribe to topic '/flowMeter'
 client.subscribe("/flowMeter");
 
