@@ -107,26 +107,36 @@ sap.ui.define(
         // BASIC: Done
         // Calculate the total consumption of this month.
         // Hint: Use method _countConsumption
+
         const today = new Date();
-        const month = new Date(today.getFullYear(), today.getMonth(), 0);
 
         this.FlowState.updateFlow({
-          totalConsumptionMonth: this._countConsumption(today, month.getDate()),
+          totalConsumptionMonth: this._countConsumption(today, today.getDate()),
         });
 
-        // ADVANCED
+        // ADVANCED: Done
         // Calculate the difference in consumption between last month and this month.
-        // this._handleTotalMonthProgression();
+        this._handleTotalMonthProgression();
       },
 
       _handleTotalMonthProgression: function (iTotal) {
-        // ADVANCED
+        // ADVANCED: Done
+        const today = new Date();
+        const lastMonthStart = new Date(today.getFullYear(), today.getMonth(), 0);
+        const lastMonthEnd = new Date(today.getFullYear(), lastMonthStart.getMonth(), lastMonthStart.getDate());
+        const lastMonthTotal = this._countConsumption(lastMonthEnd, lastMonthStart.getDate());
+
+        const { sValueState, sIndicator } = this._compareConsumption(
+          lastMonthTotal,
+          iTotal
+        );
+
         // Hint: Calculate consumption of last month using _countConsumption
         // Hint: Use _compareConsumption for your comparisons.
         this.FlowState.updateFlow({
-          totalConsumptionMonthPast: 0,
-          totalConsumptionMonthValueState: "",
-          totalConsumptionMonthIndicator: "",
+          totalConsumptionMonthPast: lastMonthTotal,
+          totalConsumptionMonthValueState: sValueState,
+          totalConsumptionMonthIndicator: sIndicator,
         });
       },
 

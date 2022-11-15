@@ -54,7 +54,7 @@ client.on("message", function (topic, message) {
 client.subscribe("/flowMeter");
 
 // OPTIONAL: Only use when IoT device is not running
-// getTestData();
+getTestData();
 
 module.exports = (srv) => {
   srv.on("READ", "FlowStream", async (req, res) => {
