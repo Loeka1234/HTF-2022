@@ -42,6 +42,7 @@ sap.ui.define(
             this._handleTotalConsumptions();
             this._handleAverageConsumptions();
             this._handleLineGraph(dToday);
+            this._handleTileUpdates();
           });
         }, 2000);
 
@@ -49,6 +50,11 @@ sap.ui.define(
         // When a tile is clicked, a separate window is opened to show extra details.
         // Notice that these details won't refresh automatically.
         // Manipulate the code so that te data in the newly opened window is updated, just like the tiles in the original page.
+      },
+
+      _handleTileUpdates: function() {
+        this._recalculateTotalConsumptionMonth();
+
       },
 
       interactiveBarChartSelectionChanged: function (oEvent) {
@@ -367,7 +373,7 @@ sap.ui.define(
         };
       },
 
-      pressTotalConsumptionMonth: function () {
+      _recalculateTotalConsumptionMonth: function () {
         const oFlowModel = this.FlowState.getProperty("flow");
         const dToday = new Date();
         const dPastDate = dToday.addDays(-31);
@@ -417,6 +423,10 @@ sap.ui.define(
           dialogTileDifference: sDifference,
           dialogTileDifferenceState: bState,
         });
+      },
+
+      pressTotalConsumptionMonth: function () {
+        this._recalculateTotalConsumptionMonth();
         this.onOpenGenericTileDialog();
       },
 
@@ -708,7 +718,7 @@ sap.ui.define(
         const sFlowState = oFlow.dialogTileValueColor;
         let oFlowHint = await this.FlowState.getFlowHint(sFlowState);
 
-        // ADVANCED
+        // ADVANCED: Done
         // Show something on the screen using the received hint. Be creative!
         this.FlowState.updateFlow({ easter: oFlowHint.message})
       },
