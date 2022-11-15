@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const cds = require("@sap/cds");
 const mqtt = require("mqtt");
 

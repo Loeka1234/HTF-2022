@@ -34,7 +34,7 @@ sap.ui.define(
         // At the moment, this only happens once at the start of the application.
         // Make it so that every 2 seconds, the graphs will be refreshed with new data.
 
-        setTimeout(() => {
+        setInterval(() => {
           FlowState.getFlowStreams().then((aFlows) => {
             this.createInteractiveBarChart(aFlows);
             const dToday = new Date();
@@ -107,10 +107,7 @@ sap.ui.define(
         const month = new Date(today.getFullYear(), today.getMonth(), 0);
 
         this.FlowState.updateFlow({
-          totalConsumptionMonth: this._countConsumption(
-            today,
-            month.getDate()
-          ),
+          totalConsumptionMonth: this._countConsumption(today, month.getDate()),
         });
 
         // ADVANCED
@@ -208,7 +205,7 @@ sap.ui.define(
         // calculate the total consumption of today.
         // Hint: Use method _countConsumption
         this.FlowState.updateFlow({
-          totalConsumptionToday: this._countConsumption(new Date(), 0),
+          totalConsumptionToday: this._countConsumption(new Date(), 1),
         });
 
         // ADVANCED
