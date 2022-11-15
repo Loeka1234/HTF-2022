@@ -651,9 +651,13 @@ sap.ui.define(
       createInteractiveBarChart: function (aFlows) {
         let aFlowBars = [];
 
-        // BASIC
+        // BASIC: Done
         // Filter the data to only get values of the past week (including today)
-        let aFilterFlows = [];
+        const currentDate = new Date();
+        currentDate.setDate(currentDate.getDate() - 7);
+        let aFilterFlows = aFlows.filter(
+          (f) => new Date(f.datetime).getDate() > currentDate.getDate()
+        );
 
         let mMappedFilterFlows = new Map();
 
