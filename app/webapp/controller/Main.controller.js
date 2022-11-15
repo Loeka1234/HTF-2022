@@ -47,7 +47,7 @@ sap.ui.define(
           });
         }, 2000);
 
-        // ADVANCED:
+        // ADVANCED: Done
         // When a tile is clicked, a separate window is opened to show extra details.
         // Notice that these details won't refresh automatically.
         // Manipulate the code so that te data in the newly opened window is updated, just like the tiles in the original page.
