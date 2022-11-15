@@ -100,11 +100,20 @@ sap.ui.define(
       },
 
       _handleTotalMonth: function () {
-        // BASIC
+        // BASIC: Done
         // Calculate the total consumption of this month.
         // Hint: Use method _countConsumption
 
-        this.FlowState.updateFlow({ totalConsumptionMonth: 0 });
+        const today = new Date();
+        const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+        const month = new Date(today.getFullYear(), today.getMonth(), 0);
+
+        this.FlowState.updateFlow({
+          totalConsumptionMonth: this._countConsumption(
+            firstDay,
+            month.getDate()
+          ),
+        });
 
         // ADVANCED
         // Calculate the difference in consumption between last month and this month.
@@ -126,7 +135,9 @@ sap.ui.define(
         const iTotal = this.FlowState.getProperty("flow").totalConsumptionMonth;
         // BASIC
         // Calculate monthly average
-        this.FlowState.updateFlow({ averageConsumptionMonth: 0 });
+        this.FlowState.updateFlow({
+          averageConsumptionMonth: 0
+        });
 
         // ADVANCED
         // Calculate the difference in consumption between last month and this month.
@@ -144,11 +155,24 @@ sap.ui.define(
         });
       },
 
+      _getFirstDayOfWeek: function (d) {
+        // TODO: Refactor this eventually
+        d = new Date(d);
+        var day = d.getDay(),
+          diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
+        return new Date(d.setDate(diff));
+      },
+
       _handleTotalWeek: function () {
-        // BASIC
+        // BASIC: Done
         // Calculate the total consumption of this week.
         // Hint: Use method _countConsumption
-        this.FlowState.updateFlow({ totalConsumptionWeek: 0 });
+        const today = new Date();
+        const startOfWeek = this._getFirstDayOfWeek(today);
+
+        this.FlowState.updateFlow({
+          totalConsumptionWeek: this._countConsumption(startOfWeek, 7),
+        });
 
         // ADVANCED
         // Calculate the difference in consumption between last week and this week.
@@ -168,6 +192,7 @@ sap.ui.define(
 
       _handleAverageWeek: function () {
         const iTotal = this.FlowState.getProperty("flow").totalConsumptionWeek;
+        
         // BASIC
         // Calculate weekly average
         this.FlowState.updateFlow({ averageConsumptionWeek: 0 });
@@ -189,11 +214,13 @@ sap.ui.define(
       },
 
       _handleTotalToday: function () {
-        // BASIC
+        // BASIC: Done
         // calculate the total consumption of today.
         // Hint: Use method _countConsumption
+        const today = new Date();
+        const startOfDay = new Date(today.getYear(), today.getMonth(), today.getDate());
 
-        this.FlowState.updateFlow({ totalConsumptionToday: 0 });
+        this.FlowState.updateFlow({ totalConsumptionToday: this._countConsumption(startOfDay, 1) });
 
         // ADVANCED
         // Calculate the difference in consumption between yesterday and today.
