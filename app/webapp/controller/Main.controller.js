@@ -374,9 +374,11 @@ sap.ui.define(
           .getResourceBundle()
           .getText("unitWeek")})`;
 
-        // BASIC
+        // BASIC: Done (Same as with month)
         // Calculate the difference between the total consumption of this week and total consumption of last week
-        const iDifference = 0;
+        const iDifference =
+          oFlowModel.totalConsumptionWeek -
+          (oFlowModel.totalConsumptionWeekPast ?? 0);
 
         const bState = iDifference > 0;
         const sDifference = `${iDifference.toFixed(2)} (${this.getView()
@@ -425,9 +427,11 @@ sap.ui.define(
           .getResourceBundle()
           .getText("unitDay")})`;
 
-        // BASIC
+        // BASIC: Done (Same as with month)
         // Calculate the difference between the total consumption of today and total consumption of yesterday
-        const iDifference = 0;
+        const iDifference =
+          oFlowModel.totalConsumptionToday -
+          (oFlowModel.totalConsumptionTodayPast ?? 0);
 
         const bState = iDifference > 0;
         const sDifference = `${iDifference.toFixed(2)} (${this.getView()
