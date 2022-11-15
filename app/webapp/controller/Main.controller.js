@@ -104,14 +104,14 @@ sap.ui.define(
         // Calculate the total consumption of this month.
         // Hint: Use method _countConsumption
         const today = new Date();
-        const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
         const month = new Date(today.getFullYear(), today.getMonth(), 0);
-        const totalConsumptionMonth = this._countConsumption(
-          firstDay,
-          month.getDate()
-        );
 
-        this.FlowState.updateFlow({ totalConsumptionMonth });
+        this.FlowState.updateFlow({
+          totalConsumptionMonth: this._countConsumption(
+            today,
+            month.getDate()
+          ),
+        });
 
         // ADVANCED
         // Calculate the difference in consumption between last month and this month.
@@ -136,7 +136,9 @@ sap.ui.define(
 
         // BASIC: Done
         // Calculate monthly average
-        this.FlowState.updateFlow({ averageConsumptionMonth: iTotal / month.getDate() });
+        this.FlowState.updateFlow({
+          averageConsumptionMonth: iTotal / month.getDate(),
+        });
 
         // ADVANCED
         // Calculate the difference in consumption between last month and this month.
@@ -154,23 +156,12 @@ sap.ui.define(
         });
       },
 
-      _getFirstDayOfWeek: function (d) {
-        // TODO: Refactor this eventually
-        d = new Date(d);
-        var day = d.getDay(),
-          diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
-        return new Date(d.setDate(diff));
-      },
-
       _handleTotalWeek: function () {
         // BASIC: Done
         // Calculate the total consumption of this week.
         // Hint: Use method _countConsumption
-        const today = new Date();
-        const startOfWeek = this._getFirstDayOfWeek(today);
-
         this.FlowState.updateFlow({
-          totalConsumptionWeek: this._countConsumption(startOfWeek, 7),
+          totalConsumptionWeek: this._countConsumption(new Date(), 7),
         });
 
         // ADVANCED
@@ -216,15 +207,8 @@ sap.ui.define(
         // BASIC: Done
         // calculate the total consumption of today.
         // Hint: Use method _countConsumption
-        const today = new Date();
-        const startOfDay = new Date(
-          today.getYear(),
-          today.getMonth(),
-          today.getDate()
-        );
-
         this.FlowState.updateFlow({
-          totalConsumptionToday: this._countConsumption(startOfDay, 0),
+          totalConsumptionToday: this._countConsumption(new Date(), 0),
         });
 
         // ADVANCED
@@ -273,6 +257,9 @@ sap.ui.define(
           let iFlowDate = oFlow.datetime;
           return iFlowDate > dXDaysAgo && iFlowDate <= dStartDate;
         });
+
+        console.log(dStartDate, iDuration);
+        console.log(aFlows);
         return this._calcConsumption(aFlows);
       },
 
