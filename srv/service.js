@@ -24,13 +24,10 @@ client.on("error", function (error) {
   console.log(error);
 });
 
-let skip = false;
-
 client.on("message", function (topic, message) {
   let jsonS = message.toString();
   let obj = JSON.parse(jsonS);
   obj.datetime = new Date(obj.datetime);
-
   // BASIC
   // Incoming logs should be added to the existing dataset (aDataset)
 
@@ -40,10 +37,6 @@ client.on("message", function (topic, message) {
   // Example:
   // Incoming data: 0 - 1 - 2 - 1 - 0 - 0 - 0 - 0 - 0 - 0 - 1 - 2 - 3
   // Result:        0 - 1 - 2 - 1 - 0 -               - 0 - 1 - 2 - 3
-  console.log(aDataSet[aDataSet.length - 1]?.flow === 0)
-  console.log(aDataSet[aDataSet.length - 2]?.flow === 0)
-  console.log(obj.flow === 0)
-
   if (
     aDataSet[aDataSet.length - 1]?.flow === 0 &&
     aDataSet[aDataSet.length - 2]?.flow === 0 &&
@@ -60,7 +53,7 @@ client.on("message", function (topic, message) {
 client.subscribe("/flowMeter");
 
 // OPTIONAL: Only use when IoT device is not running
-getTestData();
+// getTestData();
 
 module.exports = (srv) => {
   srv.on("READ", "FlowStream", async (req, res) => {
@@ -89,7 +82,7 @@ module.exports = (srv) => {
 function getTestData() {
   // Create testrecord
   const oTestRecord = {
-    flow: 0, //  low 8-10; normal 10-14, high 14-16 current
+    flow: _getRndInteger(8, 18), //  low 8-10; normal 10-14, high 14-16 current
     datetime: new Date(),
     descr: "flow in L/min",
   };
