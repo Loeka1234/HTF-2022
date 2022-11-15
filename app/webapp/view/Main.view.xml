@@ -59,7 +59,7 @@
 							
 							https://sapui5.hana.ondemand.com/sdk/#/topic/daf6852a04b44d118963968a1239d2c0.html
 						-->
-							<m:Image  src="./img/bad_wiz.svg" width="100px" height="100px"/>
+							<m:Image  src="./img/{= ${reg>/flow/oQuote/type} }_wiz.svg" width="100px" height="100px"/>
 							<m:Text class="wizMesGood" text="{reg>/flow/oQuote/message}" textAlign="Center" />
 						</m:VBox>
 
