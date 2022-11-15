@@ -33,8 +33,6 @@ client.on("message", function (topic, message) {
 
   // BASIC
   // Incoming logs should be added to the existing dataset (aDataset)
-  console.log(obj);
-  cds.insert(obj);
 
   // ADVANCED
   // We only want to register useful data, so negate consecutive flows with zero debit.
@@ -42,12 +40,19 @@ client.on("message", function (topic, message) {
   // Example:
   // Incoming data: 0 - 1 - 2 - 1 - 0 - 0 - 0 - 0 - 0 - 0 - 1 - 2 - 3
   // Result:        0 - 1 - 2 - 1 - 0 -               - 0 - 1 - 2 - 3
-  // if (obj.flow > 0) {
-  //   if (skip) return;
+  console.log(aDataSet[aDataSet.length - 1]?.flow === 0)
+  console.log(aDataSet[aDataSet.length - 2]?.flow === 0)
+  console.log(obj.flow === 0)
 
-  //   skip = true;
-  // }
-  // cds.insert(obj);
+  if (
+    aDataSet[aDataSet.length - 1]?.flow === 0 &&
+    aDataSet[aDataSet.length - 2]?.flow === 0 &&
+    obj.flow === 0
+  ) {
+    aDataSet[aDataSet.length - 1] = obj;
+  } else aDataSet.push(obj);
+
+  console.log(aDataSet);
 });
 
 // BASIC
@@ -55,7 +60,7 @@ client.on("message", function (topic, message) {
 client.subscribe("/flowMeter");
 
 // OPTIONAL: Only use when IoT device is not running
-// getTestData();
+getTestData();
 
 module.exports = (srv) => {
   srv.on("READ", "FlowStream", async (req, res) => {
@@ -84,7 +89,7 @@ module.exports = (srv) => {
 function getTestData() {
   // Create testrecord
   const oTestRecord = {
-    flow: _getRndInteger(8, 18), //  low 8-10; normal 10-14, high 14-16 current
+    flow: 0, //  low 8-10; normal 10-14, high 14-16 current
     datetime: new Date(),
     descr: "flow in L/min",
   };
