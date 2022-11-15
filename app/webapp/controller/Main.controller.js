@@ -122,9 +122,20 @@ sap.ui.define(
       _handleTotalMonthProgression: function (iTotal) {
         // ADVANCED: Done
         const today = new Date();
-        const lastMonthStart = new Date(today.getFullYear(), today.getMonth(), 0);
-        const lastMonthEnd = new Date(today.getFullYear(), lastMonthStart.getMonth(), lastMonthStart.getDate());
-        const lastMonthTotal = this._countConsumption(lastMonthEnd, lastMonthStart.getDate());
+        const lastMonthStart = new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          0
+        );
+        const lastMonthEnd = new Date(
+          today.getFullYear(),
+          lastMonthStart.getMonth(),
+          lastMonthStart.getDate()
+        );
+        const lastMonthTotal = this._countConsumption(
+          lastMonthEnd,
+          lastMonthStart.getDate()
+        );
 
         const { sValueState, sIndicator } = this._compareConsumption(
           lastMonthTotal,
@@ -151,19 +162,39 @@ sap.ui.define(
           averageConsumptionMonth: iTotal / month.getDate(),
         });
 
-        // ADVANCED
+        // ADVANCED: Done
         // Calculate the difference in consumption between last month and this month.
-        // this._handleAverageMonthProgression();
+        this._handleAverageMonthProgression();
       },
 
       _handleAverageMonthProgression: function (iAverage) {
-        // ADVANCED
+        const today = new Date();
+        const lastMonthStart = new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          0
+        );
+        const lastMonthEnd = new Date(
+          today.getFullYear(),
+          lastMonthStart.getMonth(),
+          lastMonthStart.getDate()
+        );
+        const lastMonthTotal =
+          this._countConsumption(lastMonthEnd, lastMonthStart.getDate()) /
+          lastMonthStart.getDate();
+
+        const { sValueState, sIndicator } = this._compareConsumption(
+          lastMonthTotal,
+          iAverage
+        );
+
+        // ADVANCED: Done
         // Hint: Calculate average consumption of last month
         // Hint: Use method _compareConsumption for your calculations.
         this.FlowState.updateFlow({
-          averageConsumptionMonthPast: 0,
-          averageConsumptionMonthValueState: "",
-          averageConsumptionMonthIndicator: "",
+          averageConsumptionMonthPast: lastMonthTotal,
+          averageConsumptionMonthValueState: sValueState,
+          averageConsumptionMonthIndicator: sIndicator,
         });
       },
 
@@ -175,19 +206,27 @@ sap.ui.define(
           totalConsumptionWeek: this._countConsumption(new Date(), 7),
         });
 
-        // ADVANCED
+        // ADVANCED: Done
         // Calculate the difference in consumption between last week and this week.
-        // this._handleTotalWeekProgression();
+        this._handleTotalWeekProgression();
       },
 
       _handleTotalWeekProgression: function (iTotal) {
-        // ADVANCED
+        const lastWeek = new Date();
+        lastWeek.setDate(lastWeek.getDate() - 7);
+        const lastWeekTotal = this._countConsumption(lastWeek, 7);
+
+        const { sValueState, sIndicator } = this._compareConsumption(
+          lastWeekTotal,
+          iTotal
+        );
+        // ADVANCED: Done
         // Hint: Calculate consumption of last month using _countConsumption
         // Hint: Use _compareConsumption for your comparisons.
         this.FlowState.updateFlow({
-          totalConsumptionWeekPast: 0,
-          totalConsumptionWeekValueState: "",
-          totalConsumptionWeekIndicator: "",
+          totalConsumptionWeekPast: lastWeekTotal,
+          totalConsumptionWeekValueState: sValueState,
+          totalConsumptionWeekIndicator: sIndicator,
         });
       },
 
@@ -198,19 +237,27 @@ sap.ui.define(
         // Calculate weekly average
         this.FlowState.updateFlow({ averageConsumptionWeek: iTotal / 7 });
 
-        // ADVANCED
+        // ADVANCED: Done
         // Calculate the difference in consumption between last week and this week.
-        // this._handleAverageWeekProgression();
+        this._handleAverageWeekProgression();
       },
 
       _handleAverageWeekProgression: function (iAverage) {
-        // ADVANCED
+        const lastWeek = new Date();
+        lastWeek.setDate(lastWeek.getDate() - 7);
+        const lastWeekAverage = this._countConsumption(lastWeek, 7) / 7;
+
+        const { sValueState, sIndicator } = this._compareConsumption(
+          lastWeekAverage,
+          iAverage
+        );
+        // ADVANCED: Done
         // Hint: Calculate average consumption of last week
         // Hint: Use method _compareConsumption for your calculations.
         this.FlowState.updateFlow({
-          averageConsumptionWeekPast: 0,
-          averageConsumptionWeekValueState: "",
-          averageConsumptionWeekIndicator: "",
+          averageConsumptionWeekPast: lastWeekAverage,
+          averageConsumptionWeekValueState: sValueState,
+          averageConsumptionWeekIndicator: sIndicator,
         });
       },
 
