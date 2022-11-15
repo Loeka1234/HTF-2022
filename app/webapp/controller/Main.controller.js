@@ -710,6 +710,7 @@ sap.ui.define(
 
         // ADVANCED
         // Show something on the screen using the received hint. Be creative!
+        this.FlowState.updateFlow({ easter: oFlowHint.message})
       },
 
       createInteractiveBarChart: function (aFlows) {
