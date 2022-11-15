@@ -13,6 +13,7 @@ sap.ui.define(
 
     return BaseController.extend("com.flexso.htf2022.controller.Main", {
       formatter: formatter,
+      _currentClicked: "",
 
       onInit: function () {
         (Date.prototype.addDays = function (days) {
@@ -52,9 +53,27 @@ sap.ui.define(
         // Manipulate the code so that te data in the newly opened window is updated, just like the tiles in the original page.
       },
 
-      _handleTileUpdates: function() {
-        this._recalculateTotalConsumptionMonth();
-
+      _handleTileUpdates: function () {
+        switch (this._currentClicked) {
+          case "AverageConsumptionToday":
+            this._recalculateAverageConsumptionToday();
+            break;
+          case "AverageConsumptionWeek":
+            this._recalculateAverageConsumptionWeek();
+            break;
+          case "AverageConsumptionMonth":
+            this._recalculateAverageConsumptionMonth();
+            break;
+          case "TotalConsumptionToday":
+            this._recalculateTotalConsumptionToday();
+            break;
+          case "TotalConsumptionWeek":
+            this._recalculateTotalConsumptionWeek();
+            break;
+          case "TotalConsumptionMonth":
+            this._recalculateTotalConsumptionMonth();
+            break;
+        }
       },
 
       interactiveBarChartSelectionChanged: function (oEvent) {
@@ -282,7 +301,7 @@ sap.ui.define(
 
       _handleTotalTodayProgression: function (iTotal) {
         const yesterday = new Date();
-        yesterday.setDate(yesterday.getDate() - 1)
+        yesterday.setDate(yesterday.getDate() - 1);
         const yesterdayTotal = this._countConsumption(yesterday, 1);
 
         const { sValueState, sIndicator } = this._compareConsumption(
@@ -295,7 +314,7 @@ sap.ui.define(
         this.FlowState.updateFlow({
           totalConsumptionTodayPast: yesterdayTotal,
           totalConsumptionTodayValueState: sValueState,
-          totalConsumptionTodayIndicator: sIndicator
+          totalConsumptionTodayIndicator: sIndicator,
         });
       },
 
@@ -312,7 +331,7 @@ sap.ui.define(
 
       _handleAverageTodayProgression: function (iAverage) {
         const yesterday = new Date();
-        yesterday.setDate(yesterday.getDate() - 1)
+        yesterday.setDate(yesterday.getDate() - 1);
         const yesterdayAverage = this._countConsumption(yesterday, 1) / 24;
 
         const { sValueState, sIndicator } = this._compareConsumption(
@@ -325,7 +344,7 @@ sap.ui.define(
         this.FlowState.updateFlow({
           averageConsumptionTodayPast: yesterdayAverage,
           averageConsumptionTodayValueState: sValueState,
-          averageConsumptionTodayIndicator: sIndicator
+          averageConsumptionTodayIndicator: sIndicator,
         });
       },
 
@@ -426,11 +445,12 @@ sap.ui.define(
       },
 
       pressTotalConsumptionMonth: function () {
+        this._currentClicked = "TotalConsumptionMonth";
         this._recalculateTotalConsumptionMonth();
         this.onOpenGenericTileDialog();
       },
 
-      pressTotalConsumptionWeek: function () {
+      _recalculateTotalConsumptionWeek: function () {
         const oFlowModel = this.FlowState.getProperty("flow");
         const dToday = new Date();
         const dPastDate = dToday.addDays(-7);
@@ -480,10 +500,15 @@ sap.ui.define(
           dialogTileDifference: sDifference,
           dialogTileDifferenceState: bState,
         });
+      },
+
+      pressTotalConsumptionWeek: function () {
+        this._currentClicked = "TotalConsumptionWeek";
+        this._recalculateTotalConsumptionWeek();
         this.onOpenGenericTileDialog();
       },
 
-      pressTotalConsumptionToday: function () {
+      _recalculateTotalConsumptionToday: function () {
         const oFlowModel = this.FlowState.getProperty("flow");
         const dToday = new Date();
         const dPastDate = dToday.addDays(-1);
@@ -533,10 +558,15 @@ sap.ui.define(
           dialogTileDifference: sDifference,
           dialogTileDifferenceState: bState,
         });
+      },
+
+      pressTotalConsumptionToday: function () {
+        this._currentClicked = "TotalConsumptionToday";
+        this._recalculateTotalConsumptionToday();
         this.onOpenGenericTileDialog();
       },
 
-      pressAverageConsumptionMonth: function () {
+      _recalculateAverageConsumptionMonth: function () {
         const oFlowModel = this.FlowState.getProperty("flow");
         const dToday = new Date();
         const dPastDate = dToday.addDays(-31);
@@ -586,10 +616,15 @@ sap.ui.define(
           dialogTileDifference: sDifference,
           dialogTileDifferenceState: bState,
         });
+      },
+
+      pressAverageConsumptionMonth: function () {
+        this._currentClicked = "AverageConsumptionMonth";
+        this._recalculateAverageConsumptionMonth();
         this.onOpenGenericTileDialog();
       },
 
-      pressAverageConsumptionWeek: function () {
+      _recalculateAverageConsumptionWeek: function () {
         const oFlowModel = this.FlowState.getProperty("flow");
         const dToday = new Date();
         const dPastDate = dToday.addDays(-7);
@@ -639,10 +674,15 @@ sap.ui.define(
           dialogTileDifference: sDifference,
           dialogTileDifferenceState: bState,
         });
+      },
+
+      pressAverageConsumptionWeek: function () {
+        this._currentClicked = "AverageConsumptionWeek";
+        this._recalculateAverageConsumptionWeek();
         this.onOpenGenericTileDialog();
       },
 
-      pressAverageConsumptionToday: function () {
+      _recalculateAverageConsumptionToday: function () {
         const oFlowModel = this.FlowState.getProperty("flow");
         const dToday = new Date();
         const dPastDate = dToday.addDays(-1);
@@ -692,6 +732,11 @@ sap.ui.define(
           dialogTileDifference: sDifference,
           dialogTileDifferenceState: bState,
         });
+      },
+
+      pressAverageConsumptionToday: function () {
+        this._currentClicked = "AverageConsumptionToday";
+        this._recalculateAverageConsumptionToday();
         this.onOpenGenericTileDialog();
       },
 
@@ -720,7 +765,7 @@ sap.ui.define(
 
         // ADVANCED: Done
         // Show something on the screen using the received hint. Be creative!
-        this.FlowState.updateFlow({ easter: oFlowHint.message})
+        this.FlowState.updateFlow({ easter: oFlowHint.message });
       },
 
       createInteractiveBarChart: function (aFlows) {
