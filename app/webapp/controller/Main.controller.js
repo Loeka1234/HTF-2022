@@ -81,10 +81,14 @@ sap.ui.define(
       },
 
       _handleWizard: function (aFlows) {
-        // ADVANCED
+        // ADVANCED: Done
         // Get the last data point from aFlows and derive from its flow value if its excessive waste or not.
         // The flowLevels can be found in the flow model via flowState.flow.flowLevels
         // Check method getFlowQuote in the FlowState to see how it should be used.
+        this.FlowState.getFlowQuote(
+          aFlows[aFlows.length - 1].flow <
+            this.FlowState.data.flow.flowLevels.flowLevels.NORMAL
+        );
       },
 
       _handleAverageConsumptions: function () {
