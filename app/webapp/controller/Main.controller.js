@@ -269,19 +269,27 @@ sap.ui.define(
           totalConsumptionToday: this._countConsumption(new Date(), 1),
         });
 
-        // ADVANCED
+        // ADVANCED: Done
         // Calculate the difference in consumption between yesterday and today.
-        // this._handleTotalTodayProgression();
+        this._handleTotalTodayProgression();
       },
 
       _handleTotalTodayProgression: function (iTotal) {
-        // ADVANCED
+        const yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1)
+        const yesterdayTotal = this._countConsumption(yesterday, 1);
+
+        const { sValueState, sIndicator } = this._compareConsumption(
+          yesterdayTotal,
+          iTotal
+        );
+        // ADVANCED: Done
         // Hint: Calculate consumption of last month using _countConsumption
         // Hint: Use _compareConsumption for your comparisons.
         this.FlowState.updateFlow({
-          totalConsumptionTodayPast: 0,
-          totalConsumptionTodayValueState: "",
-          totalConsumptionTodayIndicator: "",
+          totalConsumptionTodayPast: yesterdayTotal,
+          totalConsumptionTodayValueState: sValueState,
+          totalConsumptionTodayIndicator: sIndicator
         });
       },
 
@@ -291,18 +299,27 @@ sap.ui.define(
         // Calculate todays average	consumption
         this.FlowState.updateFlow({ averageConsumptionToday: iTotal / 24 });
 
-        // ADVANCED
+        // ADVANCED: Done
         // Calculate the difference in consumption between last week and this week.
-        // this._handleAverageTodayProgression();
+        this._handleAverageTodayProgression();
       },
 
       _handleAverageTodayProgression: function (iAverage) {
+        const yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1)
+        const yesterdayAverage = this._countConsumption(yesterday, 1) / 24;
+
+        const { sValueState, sIndicator } = this._compareConsumption(
+          yesterdayAverage,
+          iAverage
+        );
+
         // Hint: Calculate average consumption of last week
         // Hint: Use method _compareConsumption for your calculations.
         this.FlowState.updateFlow({
-          averageConsumptionTodayPast: 0,
-          averageConsumptionTodayValueState: "",
-          averageConsumptionTodayIndicator: "",
+          averageConsumptionTodayPast: yesterdayAverage,
+          averageConsumptionTodayValueState: sValueState,
+          averageConsumptionTodayIndicator: sIndicator
         });
       },
 
