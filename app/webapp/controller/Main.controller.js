@@ -34,7 +34,7 @@ sap.ui.define(
         // At the moment, this only happens once at the start of the application.
         // Make it so that every 2 seconds, the graphs will be refreshed with new data.
 
-        setTimeout(function () {
+        setTimeout(() => {
           FlowState.getFlowStreams().then((aFlows) => {
             this.createInteractiveBarChart(aFlows);
             const dToday = new Date();
