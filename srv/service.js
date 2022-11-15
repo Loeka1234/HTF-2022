@@ -26,6 +26,8 @@ client.on("error", function (error) {
 });
 
 client.on("message", function (topic, message) {
+  console.log("data comming")
+
   let jsonS = message.toString();
   let obj = JSON.parse(jsonS);
   obj.datetime = new Date(obj.datetime);
@@ -46,7 +48,6 @@ client.on("message", function (topic, message) {
     aDataSet[aDataSet.length - 1] = obj;
   } else aDataSet.push(obj);
 
-  console.log(aDataSet);
 });
 
 // BASIC: Done
@@ -54,7 +55,7 @@ client.on("message", function (topic, message) {
 client.subscribe("/flowMeter");
 
 // OPTIONAL: Only use when IoT device is not running
-getTestData();
+// getTestData();
 
 module.exports = (srv) => {
   srv.on("READ", "FlowStream", async (req, res) => {
