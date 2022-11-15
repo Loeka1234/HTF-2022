@@ -53,7 +53,7 @@
 							</m:TileContent>
 						</m:GenericTile>
 						<m:VBox justifyContent="Center" alignContent="SpaceAround" alignItems="Center">
-						<!-- ADVANCED: make the wizard change its appearance according to the quote type (oQuote.type)
+						<!-- ADVANCED: Done make the wizard change its appearance according to the quote type (oQuote.type)
 
 							hint: use ui5 expression binding
 							
